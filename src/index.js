@@ -5,6 +5,7 @@ import Clouds from "./images/Clouds.png";
 import Clear from "./images/Clear.png";
 import Moon from "./images/Moon.png";
 import Smoke from "./images/Smoke.png";
+import Mist from "./images/Mist.png";
 
 console.log("Weather");
 
@@ -65,6 +66,9 @@ async function getWeather(location) {
       case "Smoke":
         image.setAttribute("src", Smoke);
         break;
+      case "Mist":
+        image.setAttribute("src", Mist);
+        break;
       case "Clear":
         if (weather.time < weather.sunset && weather.time > weather.sunrise) {
           image.setAttribute("src", Clear);
@@ -90,4 +94,4 @@ async function getWeather(location) {
   }
 }
 
-getWeather("rhodes");
+getWeather("cornwall, gb");
