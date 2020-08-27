@@ -94,4 +94,4 @@ async function getWeather(location) {
   }
 }
 
-getWeather("cornwall, gb");
+getWeather("leongatha");
