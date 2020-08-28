@@ -6,6 +6,10 @@ import Clear from "./images/Clear.png";
 import Moon from "./images/Moon.png";
 import Smoke from "./images/Smoke.png";
 import Mist from "./images/Mist.png";
+import Thunderstorm from "./images/Thunderstorm.png";
+import Dust from "./images/Dust.png";
+import Snow from "./images/Snow.png";
+import Tornado from "./images/Tornado.png";
 
 console.log("Weather");
 
@@ -54,20 +58,39 @@ async function getWeather(location) {
     wind.textContent = `Wind Speed: ${weather.wind.toFixed(1)} km/h`;
     city.textContent = weather.city;
 
-    // Possible image names - Rain, Clouds, Clear
+    // Set image based on general weather category returned
+    // Possible image names - , , , , , , , , , , , Squall, Tornado
     console.log(weather.image);
     switch(weather.image) {
+      case "Drizzle":
       case "Rain":
         image.setAttribute("src", Rain);
         break;
       case "Clouds":
         image.setAttribute("src", Clouds);
         break;
+      case "Ash":
+      case "Haze":
       case "Smoke":
         image.setAttribute("src", Smoke);
         break;
+      case "Fog":
       case "Mist":
         image.setAttribute("src", Mist);
+        break;
+      case "Thunderstorm":
+        image.setAttribute("src", Thunderstorm);
+        break;
+      case "Sand":
+      case "Dust":
+        image.setAttribute("src", Dust);
+        break;
+      case "Snow":
+        image.setAttribute("src", Snow);
+        break;
+      case "Squall":
+      case "Tornado":
+        image.setAttribute("src", Tornado);
         break;
       case "Clear":
         if (weather.time < weather.sunset && weather.time > weather.sunrise) {
@@ -75,6 +98,9 @@ async function getWeather(location) {
         } else {
           image.setAttribute("src", Moon);
         }
+        break;
+      default:
+        image.setAttribute("src", Clear);
         break;
     }
 
