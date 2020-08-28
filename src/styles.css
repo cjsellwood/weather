@@ -81,6 +81,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 #temperature {
@@ -92,6 +93,23 @@ body {
   font-size: 1.5em;
   font-weight: 400;
   height: 2.1em;
+}
+
+#change-unit {
+  outline: none;
+  border: none;
+  background-color: rgb(212, 231, 255);
+  font-size: 1.5em;
+  cursor: pointer;
+  position: absolute;
+  bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 5px;
+}
+
+#change-unit:hover {
+  background-color: rgb(157, 201, 255);
 }
 
 #fourth-row {
@@ -163,3 +181,4 @@ body {
       -20px 20px 20px white, -20px -20px 20px white;
   }
 }
+

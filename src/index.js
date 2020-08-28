@@ -49,6 +49,13 @@ async function getWeather(location) {
       image: weatherData.weather[0].main,
     };
 
+    // Change temperature to farenheit if selected
+    const unitChange = document.getElementById("change-unit");
+    if (unitChange.textContent === "°C") {
+      weather.temp = weather.temp * 1.8 + 32;
+      weather.feel = weather.feel * 1.8 + 32;
+    }
+
     changeDisplay(weather);
 
     // Hide loading icon again
@@ -152,14 +159,15 @@ function changeDisplay(weather) {
 // Default weather
 getWeather("melbourne, au");
 
+// Handle submission of location
 const searchForm = document.getElementById("location-form");
-
 searchForm.addEventListener("submit", () => {
   event.preventDefault();
   console.log(searchForm);
   const searchInput = searchForm.querySelector("input");
   getWeather(searchInput.value);
   searchInput.value = "";
+  window.scrollTo(0, 0);
 });
 
 // Reset to default search box if previous search was not found
@@ -167,4 +175,34 @@ searchForm.addEventListener("input", () => {
   const searchInput = searchForm.querySelector("input");
   searchInput.style.border = "2px solid rgb(195, 195, 195)";
   searchInput.setAttribute("placeholder", "Enter Location");
+});
+
+// Function to convert to fahrenheit
+const unitBtn = document.getElementById("change-unit");
+unitBtn.addEventListener("click", () => {
+  let newUnit = "";
+  if (unitBtn.textContent === "°F") {
+    newUnit = "°F";
+  } else {
+    newUnit = "°C";
+  }
+
+  // Change displayed units
+  const unit1 = document.getElementById("temperature-unit");
+  unit1.textContent = newUnit;
+  const unit2 = document.getElementById("temperature-unit2");
+  unit2.textContent = newUnit;
+  unitBtn.textContent = newUnit === "°F" ? "°C": "°F";
+
+  const temperature = document.getElementById("temperature");
+  const feelsLike = document.getElementById("feels-like");
+
+  if (newUnit === "°F") {
+    temperature.textContent = (Number(temperature.textContent) * 1.8 + 32).toFixed(1);
+    feelsLike.textContent = (Number(feelsLike.textContent) * 1.8 + 32).toFixed(1);
+  } else {
+    temperature.textContent = ((Number(temperature.textContent) -32) / 1.8).toFixed(1);
+    feelsLike.textContent = ((Number(feelsLike.textContent) -32) / 1.8).toFixed(1);
+  }
+
 });
