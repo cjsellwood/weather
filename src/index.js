@@ -1,5 +1,6 @@
 import "./styles.css";
 import regeneratorRuntime from "regenerator-runtime";
+import White from "./images/White.png";
 import Rain from "./images/Rain.png";
 import Clouds from "./images/Clouds.png";
 import Clear from "./images/Clear.png";
@@ -10,7 +11,6 @@ import Thunderstorm from "./images/Thunderstorm.png";
 import Dust from "./images/Dust.png";
 import Snow from "./images/Snow.png";
 import Tornado from "./images/Tornado.png";
-import White from "./images/White.png";
 
 async function getWeather(location) {
   // Set api key - shouldn't do if important api key
@@ -65,7 +65,6 @@ async function getWeather(location) {
 
     // Handle any error
   } catch (err) {
-    console.log(err);
     const searchInput = document.getElementById("location-input");
     searchInput.setAttribute("placeholder", "Not found");
     searchInput.style.border = "2px solid red";
@@ -163,7 +162,6 @@ getWeather("melbourne, au");
 const searchForm = document.getElementById("location-form");
 searchForm.addEventListener("submit", () => {
   event.preventDefault();
-  console.log(searchForm);
   const searchInput = searchForm.querySelector("input");
   getWeather(searchInput.value);
   searchInput.value = "";
@@ -197,6 +195,7 @@ unitBtn.addEventListener("click", () => {
   const temperature = document.getElementById("temperature");
   const feelsLike = document.getElementById("feels-like");
 
+  // Change temperature numbers
   if (newUnit === "°F") {
     temperature.textContent = (Number(temperature.textContent) * 1.8 + 32).toFixed(1);
     feelsLike.textContent = (Number(feelsLike.textContent) * 1.8 + 32).toFixed(1);
