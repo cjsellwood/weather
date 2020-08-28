@@ -15,6 +15,10 @@ async function getWeather(location) {
   // Set api key - shouldn't do if important api key
   const key = "1ab92a784fc48e4915bb0d875f1cd316";
 
+  // Display loading icon while fetching data
+  const loading = document.getElementById("loading");
+  loading.style.display = "block";
+
   try {
     // Fetch response from api server
     const response = await fetch(
@@ -41,11 +45,18 @@ async function getWeather(location) {
     };
 
     changeDisplay(weather);
+
+    // Hide loading icon again
+    loading.style.display = "none";
+
     return weather;
 
     // Handle any error
   } catch (err) {
     console.log(err);
+    const searchInput = document.getElementById("location-input");
+    searchInput.setCustomValidity("Not found");
+    searchInput.style.border = "2px solid red";
   }
 }
 
@@ -64,13 +75,13 @@ function changeDisplay(weather) {
   // Set text for each element
   temperature.textContent = weather.temp.toFixed(1);
   feelsLike.textContent = weather.feel.toFixed(1);
-  description.textContent = weather.description[0].toUpperCase() + weather.description.slice(1,);
+  description.textContent =
+    weather.description[0].toUpperCase() + weather.description.slice(1);
   date.textContent = weather.time.toLocaleDateString();
   wind.textContent = weather.wind.toFixed(1);
   humidity.textContent = weather.humidity;
   city.textContent = weather.city;
-  
-  
+
   // Format time with am or pm
   let minutes = weather.time.toLocaleTimeString().slice(3, 5);
   let hours = weather.time.toLocaleTimeString().slice(0, 2);
@@ -131,5 +142,15 @@ function changeDisplay(weather) {
   }
 }
 
-let weather = getWeather("leongatha");
+// Default weather
+getWeather("melbourne, au");
 
+const searchForm = document.getElementById("location-form");
+
+searchForm.addEventListener("submit", () => {
+  event.preventDefault();
+  console.log(searchForm);
+  const searchInput = searchForm.querySelector("input");
+  getWeather(searchInput.value);
+  searchInput.value = "";
+});
