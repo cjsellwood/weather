@@ -129,6 +129,7 @@ body {
   height: 2em;
   font-size: 1.3em;
   text-align: center;
+  border: 2px solid rgb(195, 195, 195)
 }
 
 #location-btn {
@@ -149,7 +150,7 @@ body {
 
 @media only screen and (min-width: 500px) {
   #container {
-    background-image: url(./images/Weather2.jpg);
+    background-image: url(./images/Weather.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

@@ -10,6 +10,7 @@ import Thunderstorm from "./images/Thunderstorm.png";
 import Dust from "./images/Dust.png";
 import Snow from "./images/Snow.png";
 import Tornado from "./images/Tornado.png";
+import White from "./images/White.png";
 
 async function getWeather(location) {
   // Set api key - shouldn't do if important api key
@@ -26,7 +27,7 @@ async function getWeather(location) {
       { mode: "cors" }
     );
     const weatherData = await response.json();
-    console.log(weatherData);
+    const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
 
     // Set values from returned data as object
     const weather = {
@@ -35,7 +36,11 @@ async function getWeather(location) {
       min: Number(weatherData.main.temp_min) - 273.15,
       max: Number(weatherData.main.temp_max) - 273.15,
       description: weatherData.weather[0].description,
-      time: new Date(1000 * Number(weatherData.dt)),
+      time: new Date(
+        1000 * Number(weatherData.dt) +
+          timezoneOffset +
+          1000 * Number(weatherData.timezone)
+      ),
       sunrise: new Date(1000 * Number(weatherData.sys.sunrise)),
       sunset: new Date(1000 * Number(weatherData.sys.sunset)),
       wind: Number(weatherData.wind.speed) * 3.6,
@@ -55,8 +60,10 @@ async function getWeather(location) {
   } catch (err) {
     console.log(err);
     const searchInput = document.getElementById("location-input");
-    searchInput.setCustomValidity("Not found");
+    searchInput.setAttribute("placeholder", "Not found");
     searchInput.style.border = "2px solid red";
+    // Hide loading icon again
+    loading.style.display = "none";
   }
 }
 
@@ -77,14 +84,14 @@ function changeDisplay(weather) {
   feelsLike.textContent = weather.feel.toFixed(1);
   description.textContent =
     weather.description[0].toUpperCase() + weather.description.slice(1);
-  date.textContent = weather.time.toLocaleDateString();
+  date.textContent = weather.time.toDateString();
   wind.textContent = weather.wind.toFixed(1);
   humidity.textContent = weather.humidity;
   city.textContent = weather.city;
 
   // Format time with am or pm
-  let minutes = weather.time.toLocaleTimeString().slice(3, 5);
-  let hours = weather.time.toLocaleTimeString().slice(0, 2);
+  let minutes = weather.time.toTimeString().slice(3, 5);
+  let hours = weather.time.toTimeString().slice(0, 2);
   let formattedTime = "";
 
   if (Number(hours) === 12) {
@@ -153,4 +160,11 @@ searchForm.addEventListener("submit", () => {
   const searchInput = searchForm.querySelector("input");
   getWeather(searchInput.value);
   searchInput.value = "";
+});
+
+// Reset to default search box if previous search was not found
+searchForm.addEventListener("input", () => {
+  const searchInput = searchForm.querySelector("input");
+  searchInput.style.border = "2px solid rgb(195, 195, 195)";
+  searchInput.setAttribute("placeholder", "Enter Location");
 });
