@@ -15,40 +15,34 @@
         <div id="info">
           <div id="location-div">
             <h1 id="location">
-              Leongatha, AU
+              -
             </h1>
           </div>
           <div id="date-time">
             <p>
-              9:20 pm 28/08/2020
+              <span id="time">9:20 pm</span> <span id="date">-</span>
             </p>
           </div>
           <div id="third-row">
             <div id="image-container">
-              <img src="images/Clouds.png">
+              <img id="image" src="images/Moon.png">
             </div>
             <div id="temperature-div">
-              <h2 id="temperature">15</h2>
+              <h2 id="temperature">-</h2>
               <p id="temperature-unit">°C</p>
             </div>
           </div>
           <div id="fourth-row">
-            <p>Overcast Clouds</p>
-            <p>Feels Like: 7.5</p>
+            <p id="description">-</p>
+            <p>Feels Like: <span id="feels-like">-</span><span id="temperature-unit2">°C</span></p>
+            <p>Wind: <span id="wind">-</span> km/h</p>
+            <p>Humidity: <span id="humidity">-</span>%</p>
           </div>
-          <!-- 
-          Feels Like,
-          Time,
-          Date,
-          Description,
-          Wind Speed
-         -->
+          <form id="location-form">
+            <input type="text" name="location" id="location-input" placeholder="Enter location " required>
+            <button id="location-btn" type="submit">Search</button>
+          </form>
         </div>
-        <form id="location-form">
-          <label>Location</label>
-          <input type="text" required>
-          <button type="submit">Search</button>
-        </form>
       </div>
     </div>
   </body>

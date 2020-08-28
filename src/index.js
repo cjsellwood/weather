@@ -51,25 +51,40 @@ async function getWeather(location) {
 
 function changeDisplay(weather) {
   // Create element for each output value
-  const temperature = document.createElement("div");
-  const feelsLike = document.createElement("div");
-  const description = document.createElement("div");
-  const time = document.createElement("div");
-  const date = document.createElement("div");
-  const wind = document.createElement("div");
-  const humidity = document.createElement("div");
-  const city = document.createElement("div");
-  const image = document.createElement("img");
+  const temperature = document.getElementById("temperature");
+  const feelsLike = document.getElementById("feels-like");
+  const description = document.getElementById("description");
+  const time = document.getElementById("time");
+  const date = document.getElementById("date");
+  const wind = document.getElementById("wind");
+  const humidity = document.getElementById("humidity");
+  const city = document.getElementById("location");
+  const image = document.getElementById("image");
 
   // Set text for each element
-  temperature.textContent = `Temperature: ${weather.temp.toFixed(1)}°C`;
-  feelsLike.textContent = `Feels Like: ${weather.feel.toFixed(1)}°C`;
-  description.textContent = weather.description;
-  time.textContent = weather.time.toLocaleTimeString();
+  temperature.textContent = weather.temp.toFixed(1);
+  feelsLike.textContent = weather.feel.toFixed(1);
+  description.textContent = weather.description[0].toUpperCase() + weather.description.slice(1,);
   date.textContent = weather.time.toLocaleDateString();
-  wind.textContent = `Wind Speed: ${weather.wind.toFixed(1)} km/h`;
-  humidity.textContent = `Humidity: ${weather.humidity}%`;
+  wind.textContent = weather.wind.toFixed(1);
+  humidity.textContent = weather.humidity;
   city.textContent = weather.city;
+  
+  
+  // Format time with am or pm
+  let minutes = weather.time.toLocaleTimeString().slice(3, 5);
+  let hours = weather.time.toLocaleTimeString().slice(0, 2);
+  let formattedTime = "";
+
+  if (Number(hours) === 12) {
+    formattedTime = `${Number(hours)}:${minutes} pm`;
+  } else if (Number(hours) > 11) {
+    formattedTime = `${Number(hours) % 12}:${minutes} pm`;
+  } else {
+    formattedTime = `${hours}:${minutes} am`;
+  }
+
+  time.textContent = formattedTime;
 
   // Set image based on general weather category returned
   switch (weather.image) {
@@ -114,18 +129,6 @@ function changeDisplay(weather) {
       image.setAttribute("src", Clear);
       break;
   }
-
-  // Add to display
-  const info = document.getElementById("info");
-  //info.appendChild(temperature);
-  info.appendChild(feelsLike);
-  info.appendChild(description);
-  //info.appendChild(time);
-  //info.appendChild(date);
-  info.appendChild(wind);
-  info.appendChild(humidity);
-  //info.appendChild(city);
-  //info.appendChild(image);
 }
 
 let weather = getWeather("leongatha");
